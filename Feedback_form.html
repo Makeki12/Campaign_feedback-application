@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let name = document.forms["feedbackForm"]["name"].value;
+            let email = document.forms["feedbackForm"]["email"].value;
+            let feedback = document.forms["feedbackForm"]["feedback"].value;
+            let rating = document.forms["feedbackForm"]["rating"].value;
+            let error = "";
+
+            if (name == "") {
+                error += "Name must be filled out.\\n";
+            }
+            if (email == "") {
+                error += "Email must be filled out.\\n";
+            } else {
+                let re = /\S+@\S+\.\S+/;
+                if (!re.test(email)) {
+                    error += "Email format is invalid.\\n";
+                }
+            }
+            if (feedback == "") {
+                error += "Feedback must be filled out.\\n";
+            }
+            if (rating == "") {
+                error += "Rating must be selected.\\n";
+            }
+
+            if (error != "") {
+                alert(error);
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Feedback Form</h1>
+    <form name="feedbackForm" action="submit_feedback.php" method="post" onsubmit="return validateForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4"></textarea>
+        
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating">
+            <option value="">Select a rating</option>
+            <option value="1">1 - Very Poor</option>
+            <option value="2">2 - Poor</option>
+            <option value="3">3 - Average</option>
+            <option value="4">4 - Good</option>
+            <option value="5">5 - Excellent</option>
+        </select>
+        
+        <input type="submit" value="Submit Feedback">
+    </form>
+</body>
+</html>
